@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CodeDevelopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Difficulty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="text" Nullable="false" />
+          <Property Name="difficultyID" Type="int" Nullable="false" />
+          <Property Name="photo" Type="image" />
+        </EntityType>
+        <EntityType Name="TrainingTag">
+          <Key>
+            <PropertyRef Name="trainingID" />
+            <PropertyRef Name="tagID" />
+          </Key>
+          <Property Name="trainingID" Type="int" Nullable="false" />
+          <Property Name="tagID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="roleID" Type="int" Nullable="false" />
+          <Property Name="regDate" Type="date" Nullable="false" />
+          <Property Name="avatar" Type="image" />
+        </EntityType>
+        <EntityType Name="UserTraining">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="trainingID" />
+          </Key>
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="trainingID" Type="int" Nullable="false" />
+          <Property Name="CompleteCounter" Type="int" Nullable="false" />
+          <Property Name="rate" Type="int" />
+        </EntityType>
+        <Association Name="FK_Training_Difficulty">
+          <End Role="Difficulty" Type="Self.Difficulty" Multiplicity="1" />
+          <End Role="Training" Type="Self.Training" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Difficulty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Training">
+              <PropertyRef Name="difficultyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingTag_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="TrainingTag" Type="Self.TrainingTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TrainingTag">
+              <PropertyRef Name="tagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrainingTag_Training">
+          <End Role="Training" Type="Self.Training" Multiplicity="1" />
+          <End Role="TrainingTag" Type="Self.TrainingTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TrainingTag">
+              <PropertyRef Name="trainingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTraining_Training">
+          <End Role="Training" Type="Self.Training" Multiplicity="1" />
+          <End Role="UserTraining" Type="Self.UserTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTraining">
+              <PropertyRef Name="trainingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTraining_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserTraining" Type="Self.UserTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTraining">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CodeDevelopModelContainer">
+          <EntitySet Name="Difficulty" EntityType="Self.Difficulty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Training" EntityType="Self.Training" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrainingTag" EntityType="Self.TrainingTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTraining" EntityType="Self.UserTraining" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Training_Difficulty" Association="Self.FK_Training_Difficulty">
+            <End Role="Difficulty" EntitySet="Difficulty" />
+            <End Role="Training" EntitySet="Training" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingTag_Tag" Association="Self.FK_TrainingTag_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="TrainingTag" EntitySet="TrainingTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrainingTag_Training" Association="Self.FK_TrainingTag_Training">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="TrainingTag" EntitySet="TrainingTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTraining_Training" Association="Self.FK_UserTraining_Training">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="UserTraining" EntitySet="UserTraining" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTraining_User" Association="Self.FK_UserTraining_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserTraining" EntitySet="UserTraining" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CodeDevelopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Difficulty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Training" Relationship="Self.FK_Training_Difficulty" FromRole="Difficulty" ToRole="Training" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Training" Relationship="Self.TrainingTag" FromRole="Tag" ToRole="Training" />
+        </EntityType>
+        <EntityType Name="Training">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="difficultyID" Type="Int32" Nullable="false" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Difficulty" Relationship="Self.FK_Training_Difficulty" FromRole="Training" ToRole="Difficulty" />
+          <NavigationProperty Name="UserTraining" Relationship="Self.FK_UserTraining_Training" FromRole="Training" ToRole="UserTraining" />
+          <NavigationProperty Name="Tag" Relationship="Self.TrainingTag" FromRole="Training" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="roleID" Type="Int32" Nullable="false" />
+          <Property Name="regDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="UserTraining" Relationship="Self.FK_UserTraining_User" FromRole="User" ToRole="UserTraining" />
+        </EntityType>
+        <EntityType Name="UserTraining">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="trainingID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="trainingID" Type="Int32" Nullable="false" />
+          <Property Name="CompleteCounter" Type="Int32" Nullable="false" />
+          <Property Name="rate" Type="Int32" />
+          <NavigationProperty Name="Training" Relationship="Self.FK_UserTraining_Training" FromRole="UserTraining" ToRole="Training" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserTraining_User" FromRole="UserTraining" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Training_Difficulty">
+          <End Role="Difficulty" Type="Self.Difficulty" Multiplicity="1" />
+          <End Role="Training" Type="Self.Training" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Difficulty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Training">
+              <PropertyRef Name="difficultyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTraining_Training">
+          <End Role="Training" Type="Self.Training" Multiplicity="1" />
+          <End Role="UserTraining" Type="Self.UserTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTraining">
+              <PropertyRef Name="trainingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTraining_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserTraining" Type="Self.UserTraining" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTraining">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TrainingTag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+          <End Role="Training" Type="Self.Training" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CodeDevelopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Difficulty" EntityType="Self.Difficulty" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" />
+          <EntitySet Name="Training" EntityType="Self.Training" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserTraining" EntityType="Self.UserTraining" />
+          <AssociationSet Name="FK_Training_Difficulty" Association="Self.FK_Training_Difficulty">
+            <End Role="Difficulty" EntitySet="Difficulty" />
+            <End Role="Training" EntitySet="Training" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTraining_Training" Association="Self.FK_UserTraining_Training">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="UserTraining" EntitySet="UserTraining" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTraining_User" Association="Self.FK_UserTraining_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserTraining" EntitySet="UserTraining" />
+          </AssociationSet>
+          <AssociationSet Name="TrainingTag" Association="Self.TrainingTag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="Training" EntitySet="Training" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CodeDevelopModelContainer" CdmEntityContainer="CodeDevelopEntities">
+          <EntitySetMapping Name="Difficulty">
+            <EntityTypeMapping TypeName="CodeDevelopModel.Difficulty">
+              <MappingFragment StoreEntitySet="Difficulty">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="CodeDevelopModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tag">
+            <EntityTypeMapping TypeName="CodeDevelopModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Training">
+            <EntityTypeMapping TypeName="CodeDevelopModel.Training">
+              <MappingFragment StoreEntitySet="Training">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="difficultyID" ColumnName="difficultyID" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="CodeDevelopModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+                <ScalarProperty Name="regDate" ColumnName="regDate" />
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTraining">
+            <EntityTypeMapping TypeName="CodeDevelopModel.UserTraining">
+              <MappingFragment StoreEntitySet="UserTraining">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="trainingID" ColumnName="trainingID" />
+                <ScalarProperty Name="CompleteCounter" ColumnName="CompleteCounter" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TrainingTag" TypeName="CodeDevelopModel.TrainingTag" StoreEntitySet="TrainingTag">
+            <EndProperty Name="Tag">
+              <ScalarProperty Name="Id" ColumnName="tagID" />
+            </EndProperty>
+            <EndProperty Name="Training">
+              <ScalarProperty Name="Id" ColumnName="trainingID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
