@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\BooleanToVisibilityConverterClass.cs" />
     <Compile Include="Class\RelayCommandClass.cs" />
     <Compile Include="View\Windows\HomeWindow.xaml.cs">
       <DependentUpon>HomeWindow.xaml</DependentUpon>

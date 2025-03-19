@@ -44,7 +44,8 @@
                          Content="Начать изучение" FontSize="24" Foreground="White" FontFamily="Inter" Click="StartLearningBt_Click"/>
 
                 <Button Name="StopLearningBt" HorizontalAlignment="Left" VerticalAlignment="Center" Height="51" Width="400"  Margin="20 0 0 0" Background="White" BorderBrush="#9C9C9C"
-                         BorderThickness="3" Content="Остановить изучение" FontSize="24" Foreground="#9747FF" FontFamily="Inter" Click="StopLearningBt_Click"/>
+                         BorderThickness="3" Content="Остановить изучение" FontSize="24" Foreground="#9747FF" FontFamily="Inter" Click="StopLearningBt_Click"
+                         Visibility="Collapsed"/>
             </Grid>
             
             <Grid Grid.Row="0" Grid.ColumnSpan="2">

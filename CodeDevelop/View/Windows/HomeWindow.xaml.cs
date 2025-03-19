@@ -1,6 +1,7 @@
 ﻿using CodeDevelop.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,26 @@ namespace CodeDevelop.View.Windows
     /// </summary>
     public partial class HomeWindow : Window
     {
+
+        private ObservableCollection<Training> _trainings;
+        private Training _selectedTraining;
+
+        public ObservableCollection<Training> Trainings
+        {
+            get { return _trainings; }
+            set { _trainings = value; }
+        }
+
+        public Training SelectedTraining
+        {
+            get { return _selectedTraining; }
+            set
+            {
+                _selectedTraining = value;
+                TrainingDescriptionTb.Text = _selectedTraining?.description;
+            }
+        }
+
         public HomeWindow()
         {
             InitializeComponent();
@@ -33,17 +54,22 @@ namespace CodeDevelop.View.Windows
             //TrainingDescriptionTb.DataContext = (TrainingList.SelectedItem as Training).description;
 
             TrainingList.SelectedIndex = 0;
+
         }
 
        
         private void StartLearningBt_Click(object sender, RoutedEventArgs e)
         {
-
+            StartLearningBt.Visibility = Visibility.Collapsed;
+            StopLearningBt.Visibility = Visibility.Visible;
+            MessageBox.Show($"Начало изучения: {SelectedTraining.name}");
         }
 
         private void StopLearningBt_Click(object sender, RoutedEventArgs e)
         {
-
+            StartLearningBt.Visibility = Visibility.Visible;
+            StopLearningBt.Visibility = Visibility.Collapsed;
+            MessageBox.Show($"Остановка изучения: {SelectedTraining.name}");
         }
 
         private void ProfileBt_Click(object sender, RoutedEventArgs e)
