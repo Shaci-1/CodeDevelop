@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище CodeDevelopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище CodeDevelopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Difficulty">
           <Key>
             <PropertyRef Name="Id" />
@@ -35,6 +35,8 @@
           <Property Name="description" Type="text" Nullable="false" />
           <Property Name="difficultyID" Type="int" Nullable="false" />
           <Property Name="photo" Type="image" />
+          <Property Name="trainNum" Type="int" />
+          <Property Name="nameLanguage" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="TrainingTag">
           <Key>
@@ -170,8 +172,7 @@
             <End Role="UserTraining" EntitySet="UserTraining" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CodeDevelopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -211,6 +212,8 @@
           <NavigationProperty Name="Difficulty" Relationship="Self.FK_Training_Difficulty" FromRole="Training" ToRole="Difficulty" />
           <NavigationProperty Name="UserTraining" Relationship="Self.FK_UserTraining_Training" FromRole="Training" ToRole="UserTraining" />
           <NavigationProperty Name="Tag" Relationship="Self.TrainingTag" FromRole="Training" ToRole="Tag" />
+          <Property Name="trainNum" Type="Int32" />
+          <Property Name="nameLanguage" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -350,6 +353,8 @@
           <EntitySetMapping Name="Training">
             <EntityTypeMapping TypeName="CodeDevelopModel.Training">
               <MappingFragment StoreEntitySet="Training">
+                <ScalarProperty Name="nameLanguage" ColumnName="nameLanguage" />
+                <ScalarProperty Name="trainNum" ColumnName="trainNum" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />

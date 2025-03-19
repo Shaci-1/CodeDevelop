@@ -14,30 +14,9 @@ namespace CodeDevelop
     /// </summary>
     public partial class App : Application
     {
-        public static CodeDevelopEntities CodeDevelopEntities = new CodeDevelopEntities();
+        public static CodeDevelopEntities context = new CodeDevelopEntities();
 
-        public static User currentUser;
+        public static User currentUser;        
 
-        private static CodeDevelopEntities _context;
-
-        public static CodeDevelopEntities Context
-        {
-            get
-            {
-                if (_context == null)
-                {
-                    _context = new CodeDevelopEntities();
-                }
-                return _context;
-            }
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            base.OnExit(e);
-
-            // Освобождение ресурсов контекста при выходе из приложения
-            _context?.Dispose();
-        }
     }
 }

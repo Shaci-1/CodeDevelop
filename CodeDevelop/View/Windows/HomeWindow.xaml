@@ -5,8 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeDevelop.View.Windows"
         mc:Ignorable="d"
-        Title="HomeWindow" Height="450" Width="800">
+        Title="Главный экран" 
+        MinHeight="720" MinWidth="1280" 
+        MaxWidth="1920" MaxHeight="1080" ResizeMode="CanResizeWithGrip">
     <Grid>
-        
+        <Image Source="/Picture/Desktop - 2.png" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <ListView Name="TrainingList" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" SelectionChanged="TrainingList_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Номер" DisplayMemberBinding="{Binding trainNum}"/>
+                        <GridViewColumn Header="Название" DisplayMemberBinding="{Binding name}"/>
+                        <GridViewColumn Header="Язык программирования" DisplayMemberBinding="{Binding nameLanguage}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Grid Grid.Column="1" Grid.Row="1"  Background="White" Name="TrainingDetailsGrid">
+                <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible">
+                    <TextBlock Name="TrainingDescriptionTb" Text="" TextWrapping="Wrap" Width="1300" Height="800" VerticalAlignment="Top" Margin="0 20 0 0"
+                           FontSize="15" FontFamily="Inter"/>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid Grid.Column="1" Grid.Row="2" Background="White">
+                <Button Name="StartLearningBt" HorizontalAlignment="Right" VerticalAlignment="Center" Height="51" Width="400" Margin="0 0 20 0" Background="#9747FF" BorderBrush="White"
+                         Content="Начать изучение" FontSize="24" Foreground="White" FontFamily="Inter" Click="StartLearningBt_Click"/>
+
+                <Button Name="StopLearningBt" HorizontalAlignment="Left" VerticalAlignment="Center" Height="51" Width="400"  Margin="20 0 0 0" Background="White" BorderBrush="#9C9C9C"
+                         BorderThickness="3" Content="Остановить изучение" FontSize="24" Foreground="#9747FF" FontFamily="Inter" Click="StopLearningBt_Click"/>
+            </Grid>
+            
+            <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                <Button Name="ProfileBt" HorizontalAlignment="Left" Height="51" Width="400"  Margin="20 0 0 0" Background="White" BorderBrush="#9C9C9C"
+                         BorderThickness="2" Content="Профиль" FontSize="28" Foreground="#9747FF" FontFamily="Inter" Click="ProfileBt_Click"/>
+
+                <Button Name="ExitBt" HorizontalAlignment="Right" Height="51" Width="200"  Margin="0 0 20 0" Background="White" BorderBrush="#9C9C9C"
+                         BorderThickness="2" Content="Выйти" FontSize="28" Foreground="red" FontFamily="Inter" Click="ExitBt_Click"/>
+            </Grid>
+        </Grid>        
     </Grid>
 </Window>

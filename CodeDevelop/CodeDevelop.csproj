@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\RelayCommandClass.cs" />
     <Compile Include="View\Windows\HomeWindow.xaml.cs">
       <DependentUpon>HomeWindow.xaml</DependentUpon>
     </Compile>
@@ -73,7 +74,7 @@
     <Compile Include="View\Windows\TechSuppWindow.xaml.cs">
       <DependentUpon>TechSuppWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Dictionary\GridDictionary.xaml">
+    <Page Include="Dictionary\ListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -26,6 +26,8 @@ namespace CodeDevelop.Model
         public string description { get; set; }
         public int difficultyID { get; set; }
         public byte[] photo { get; set; }
+        public Nullable<int> trainNum { get; set; }
+        public string nameLanguage { get; set; }
     
         public virtual Difficulty Difficulty { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

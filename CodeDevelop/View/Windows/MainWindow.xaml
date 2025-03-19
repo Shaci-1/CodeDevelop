@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeDevelop"
         mc:Ignorable="d"
-        Title="Экран авторизации" MinHeight="600" MinWidth="800" MaxHeight="1024" MaxWidth="1920" ResizeMode="CanResize">
+        Title="Экран авторизации" MinHeight="600" MinWidth="800" MaxHeight="1024" MaxWidth="1920" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
         <Style x:Key="GridStyle" TargetType="{x:Type Grid}"/>
     </Window.Resources>

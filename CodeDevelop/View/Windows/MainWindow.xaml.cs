@@ -57,15 +57,16 @@ namespace CodeDevelop
             switch (App.currentUser.roleID)
             {
                 case 1:
+                    HomeWindow homeWindow = new HomeWindow();
+                    homeWindow.Show();
+                    break;
+                case 2:
                     AdminWindow adminWindow = new AdminWindow();
                     adminWindow.Show();
                     break;
-                case 2:
+                case 3:
                     TechSuppWindow techSuppWindow = new TechSuppWindow();
                     techSuppWindow.Show();
-                    break;
-                case 3:
-                    FeedbackClass.Informatiom("Вход в качестве пользователя");
                     break;
             }
             Close();
@@ -74,7 +75,7 @@ namespace CodeDevelop
         public void Authentication()
         {
             //Проверка
-            App.currentUser = App.Context.User.FirstOrDefault(user => user.login == loginBx.Text && user.password == passwordBx.Password);
+            App.currentUser = App.context.User.FirstOrDefault(user => user.login == loginBx.Text && user.password == passwordBx.Password);
 
             if (App.currentUser == null)
             {

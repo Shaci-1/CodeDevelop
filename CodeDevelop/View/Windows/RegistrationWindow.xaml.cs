@@ -47,8 +47,8 @@ namespace CodeDevelop.View.Windows
                         regDate = DateTime.Now,
                         avatar = null
                     };
-                    App.Context.User.Add(newUser);
-                    App.Context.SaveChanges();
+                    App.context.User.Add(newUser);
+                    App.context.SaveChanges();
 
                     FeedbackClass.Informatiom("Вы зарегистрировались!");
 
@@ -71,7 +71,6 @@ namespace CodeDevelop.View.Windows
         }
         private void regCompleteBt_Click(object sender, RoutedEventArgs e)
         {
-            if( )
             userRegistration();
         }
 
