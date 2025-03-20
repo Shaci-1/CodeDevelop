@@ -62,24 +62,27 @@ namespace CodeDevelop.View.Windows
         {
             StartLearningBt.Visibility = Visibility.Collapsed;
             StopLearningBt.Visibility = Visibility.Visible;
-            MessageBox.Show($"Начало изучения: {SelectedTraining.name}");
+            BreakLearningBt.Visibility = Visibility.Visible;
+            MessageBox.Show($"Вы начали изучение.");
         }
 
         private void StopLearningBt_Click(object sender, RoutedEventArgs e)
         {
             StartLearningBt.Visibility = Visibility.Visible;
             StopLearningBt.Visibility = Visibility.Collapsed;
-            MessageBox.Show($"Остановка изучения: {SelectedTraining.name}");
+            BreakLearningBt.Visibility = Visibility.Visible;
+            MessageBox.Show($"Вы остановили изучение.");
         }
 
         private void ProfileBt_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void ExitBt_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
+            MainWindow mainWindow = new MainWindow();
         }
 
         private void TrainingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -93,6 +96,14 @@ namespace CodeDevelop.View.Windows
             {
                 TrainingDescriptionTb.Text = string.Empty;
             }
+        }
+
+        private void BreakLearningBt_Click(object sender, RoutedEventArgs e)
+        {
+            StartLearningBt.Visibility = Visibility.Visible;
+            StopLearningBt.Visibility = Visibility.Collapsed;
+            BreakLearningBt.Visibility = Visibility.Collapsed;
+            MessageBox.Show($"Вы закончили обучение.");
         }
     }
 }
