@@ -22,7 +22,7 @@
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
 
-            <ListView Name="TrainingList" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" SelectionChanged="TrainingList_SelectionChanged">
+            <ListView Name="TrainingList" Grid.Column="0" ItemsSource="{Binding Trainings}" Grid.Row="1" Grid.RowSpan="3" SelectionChanged="TrainingList_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Номер" DisplayMemberBinding="{Binding trainNum}"/>
@@ -31,25 +31,57 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-
+           
             <Grid Grid.Column="1" Grid.Row="1"  Background="White" Name="TrainingDetailsGrid">
-                <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible">
-                    <TextBlock Name="TrainingDescriptionTb" Text="" TextWrapping="Wrap" Width="1300" Height="800" VerticalAlignment="Top" Margin="0 20 0 0"
-                           FontSize="15" FontFamily="Inter"/>
-                </ScrollViewer>
+                <TabControl Name="TrainingStep">                                       
+                    <TabItem Name="DescriptionTab">
+                        <TabItem.Header>
+                            <TextBlock Text="Текстовая часть"/>
+                        </TabItem.Header>
+                        
+                        <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible">
+                            <TextBlock Name="TrainingDescriptionTb" Text="" TextWrapping="Wrap" Width="1300" Height="800" VerticalAlignment="Top" Margin="0 20 0 0"
+                             FontSize="15" FontFamily="Inter"/>
+                        </ScrollViewer>
+                    </TabItem>
+
+                    <TabItem Header="Тест">
+                        <StackPanel>
+                            <TextBlock Name="TestQuestionTb" TextWrapping="WrapWithOverflow" Margin="20"
+                               FontSize="18" FontFamily="Inter"/>
+                            <StackPanel Orientation="Vertical" Margin="20">
+                                <RadioButton Name="RadioButton1" GroupName="Answers" Content=""/>
+                                <RadioButton Name="RadioButton2" GroupName="Answers" Content=""/>
+                                <RadioButton Name="RadioButton3" GroupName="Answers" Content=""/>
+                                <RadioButton Name="RadioButton4" GroupName="Answers" Content=""/>
+                            </StackPanel>
+                            <Button Name="CheckAnswerBt" Content="Проверить ответ" FontSize="24" Foreground="White" FontFamily="Inter"
+                            Width="200" Margin="0 20 0 0" Background="#9747FF" BorderBrush="White"
+                            Click="CheckAnswer_Click"/>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Завершение">
+                        <StackPanel>
+                            <TextBlock Text="Тестирование завершено!" FontSize="24" FontFamily="Inter" HorizontalAlignment="Center" Margin="20"/>
+                            <TextBlock Name="ScoreMessageTb" Text="" FontSize="20" FontFamily="Inter" HorizontalAlignment="Center" Margin="20"/>
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem Name="PracticeTaskTab">
+                        <TabItem.Header>
+                            <TextBlock Text="Практическое задание"/>
+                        </TabItem.Header>
+                        
+                    </TabItem>
+                </TabControl>
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="2" Background="White">
-                <Button Name="StartLearningBt" HorizontalAlignment="Right" VerticalAlignment="Center" Height="51" Width="400" Margin="0 0 20 0" Background="#9747FF" BorderBrush="White"
-                         Content="Начать изучение" FontSize="24" Foreground="White" FontFamily="Inter" Click="StartLearningBt_Click"/>
-
-                <Button Name="StopLearningBt" HorizontalAlignment="Right" VerticalAlignment="Center" Height="51" Width="400"  Margin="0 0 20 0" Background="White" BorderBrush="#9C9C9C"
-                         BorderThickness="3" Content="Остановить изучение" FontSize="24" Foreground="#9747FF" FontFamily="Inter" Click="StopLearningBt_Click"
-                         Visibility="Collapsed"/>
-
-                <Button Name="BreakLearningBt" HorizontalAlignment="Left" VerticalAlignment="Center" Height="51" Width="400"  Margin="20 0 0 0" Background="White" BorderBrush="#9C9C9C"
-                         BorderThickness="3" Content="Закончить изучение" FontSize="24" Foreground="#9747FF" FontFamily="Inter" Click="BreakLearningBt_Click"
-                         Visibility="Collapsed"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 40 0">
+                    <Button Name="NextButton" Content="Далее" FontSize="24" Foreground="White" FontFamily="Inter"
+                        Width="200" Background="#9747FF" BorderBrush="White"
+                        Click="NextButton_Click"/>
+                </StackPanel>
             </Grid>
             
             <Grid Grid.Row="0" Grid.ColumnSpan="2">

@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -65,6 +66,54 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Class\RelayCommandClass.cs" />
+    <Compile Include="Model\CodeDevelop.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeDevelop.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CodeDevelop.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CodeDevelop.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeDevelop.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Difficulty.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Role.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagrams_Result.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Status.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sysdiagrams.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tag.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Training.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TrainingTest.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\User.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserTraining.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -102,39 +151,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Class\FeedbackClass.cs" />
-    <Compile Include="Model\CodeDevelopModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CodeDevelopModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CodeDevelopModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CodeDevelopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CodeDevelopModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CodeDevelopModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Difficulty.cs">
-      <DependentUpon>CodeDevelopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Role.cs">
-      <DependentUpon>CodeDevelopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Tag.cs">
-      <DependentUpon>CodeDevelopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Training.cs">
-      <DependentUpon>CodeDevelopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\User.cs">
-      <DependentUpon>CodeDevelopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\UserTraining.cs">
-      <DependentUpon>CodeDevelopModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="View\Windows\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
@@ -169,12 +185,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\CodeDevelopModel.edmx">
+    <EntityDeploy Include="Model\CodeDevelop.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CodeDevelopModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>CodeDevelop.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\CodeDevelopModel.edmx.diagram">
-      <DependentUpon>CodeDevelopModel.edmx</DependentUpon>
+    <None Include="Model\CodeDevelop.edmx.diagram">
+      <DependentUpon>CodeDevelop.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -185,25 +201,27 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Picture\Desktop - 2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\CodeDevelopModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CodeDevelopModel.Context.cs</LastGenOutput>
-      <DependentUpon>CodeDevelopModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Model\CodeDevelopModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CodeDevelopModel.edmx</DependentUpon>
-      <LastGenOutput>CodeDevelopModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="Picture\Avatar.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Model\CodeDevelop.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CodeDevelop.edmx</DependentUpon>
+      <LastGenOutput>CodeDevelop.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\CodeDevelop.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CodeDevelop.edmx</DependentUpon>
+      <LastGenOutput>CodeDevelop.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

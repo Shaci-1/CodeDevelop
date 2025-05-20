@@ -14,7 +14,7 @@ namespace CodeDevelop
     /// </summary>
     public partial class App : Application
     {
-        public static CodeDevelopEntities context = new CodeDevelopEntities();
+        public static CodeDevelopEntities1 context = new CodeDevelopEntities1();
 
         public static User currentUser;        
 

@@ -15,10 +15,10 @@
             <StackPanel>
                 <TextBlock Text="Авторизация" HorizontalAlignment="Center" FontSize="30" FontFamily="Inter" Margin="0 40 0 0"/>
                 <TextBox Name="loginBx" HorizontalAlignment="Center" Height="51" Width="400" Margin="0 40 0 0" Background="#FFECECEC" BorderBrush="White"
-                         Text="Логин или email" FontFamily="Inter" FontSize="16"/>
+                         Text="egolubeva" FontFamily="Inter" FontSize="16"/>
                 
                 <PasswordBox Name="passwordBx" HorizontalAlignment="Center" Height="51" Width="400" Margin="0 40 0 0" Background="#FFECECEC" BorderBrush="White"
-                         Password="Введите пароль" FontSize="16"/>
+                         Password="e_2345" FontSize="16"/>
                 
                 <Button Name="NextBt" HorizontalAlignment="Center" Height="51" Width="400" Margin="0 30 0 0" Background="#9747FF" BorderBrush="White"
                          Content="Продолжить" FontSize="16" Foreground="White" FontFamily="Inter" Click="NextBt_Click"/>
