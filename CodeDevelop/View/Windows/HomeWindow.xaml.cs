@@ -19,6 +19,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Configuration;
+using System.IO;
+using Microsoft.Win32;
 
 namespace CodeDevelop.View.Windows
 {
@@ -31,8 +33,10 @@ namespace CodeDevelop.View.Windows
         private ObservableCollection<Training> _trainings;
         private Training _selectedTraining;
         private List<TrainingTest> _tests;
+        private Practice _practice;
         private int _currentTestIndex = 0;
         private int _currentTabIndex = 0;
+        private int _totalScore = 0;
 
         public ObservableCollection<Training> Trainings
         {
@@ -112,7 +116,7 @@ namespace CodeDevelop.View.Windows
             string connectionString = ConfigurationManager.ConnectionStrings["CodeDevelopEntities2"].ConnectionString;
 
             // SQL-запрос для выбора данных из таблицы TrainingTest
-            string query = "SELECT Id, text, answer1, answer2, answer3, answer4, rightAnswer, trainingId FROM TrainingTest WHERE trainingId = @trainingId";
+            string query = "SELECT Id, text, answer1, answer2, answer3, answer4, rightAnswer, trainingId, mark FROM TrainingTest WHERE trainingId = @trainingId";
 
             _tests = new List<TrainingTest>();
 
@@ -139,7 +143,8 @@ namespace CodeDevelop.View.Windows
                             answer3 = row["answer3"] as string,
                             answer4 = row["answer4"] as string,
                             rightAnswer = row["rightAnswer"] as string,
-                            trainingId = Convert.ToInt32(row["trainingId"])
+                            trainingId = Convert.ToInt32(row["trainingId"]),
+                            mark = Convert.ToInt32(row["mark"]) // Загрузка балла из базы данных
                         });
                     }
 
@@ -155,6 +160,51 @@ namespace CodeDevelop.View.Windows
                 catch (Exception ex)
                 {
                     MessageBox.Show("Ошибка при загрузке тестов: " + ex.Message);
+                }
+            }
+        }
+
+        private void LoadPractice(int trainingId)
+        {
+            // Получение строки подключения из файла конфигурации
+            string connectionString = ConfigurationManager.ConnectionStrings["CodeDevelopEntities2"].ConnectionString;
+
+            // SQL-запрос для выбора данных из таблицы Practice
+            string query = "SELECT Id, text, trainingId, name, screenShot FROM Practice WHERE trainingId = @trainingId";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@trainingId", trainingId);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+
+                try
+                {
+                    connection.Open();
+                    adapter.Fill(dataTable);
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        DataRow row = dataTable.Rows[0];
+                        _practice = new Practice
+                        {
+                            Id = Convert.ToInt32(row["Id"]),
+                            text = row["text"] as string,
+                            trainingId = Convert.ToInt32(row["trainingId"]),
+                            name = row["name"] as string,
+                            screenShot = (byte[])row["screenShot"]
+                        };
+                    }
+                    else
+                    {
+                        _practice = null;
+                        MessageBox.Show("Практическое задание для данного тренировочного занятия не найдено.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при загрузке практического задания: " + ex.Message);
                 }
             }
         }
@@ -184,7 +234,55 @@ namespace CodeDevelop.View.Windows
                 MessageBox.Show("Тесты завершены.");
                 // Перейти к следующей вкладке или завершить тестирование
                 TrainingStep.SelectedIndex = 2; // Предполагается, что у вас есть вкладка для завершения теста
+                CalculateAndDisplayScore();
+                ShowPractice();
             }
+        }
+
+        private void CalculateAndDisplayScore()
+        {
+            ScoreMessageTb.Text = $"Ваш итоговый балл: {_totalScore}";
+        }
+
+        private void ShowPractice()
+        {
+            if (_practice != null)
+            {
+                PracticeTitleTb.Text = _practice.name;
+                PracticeTextTb.Text = FormatStringWithNewLines(_practice.text);
+                ShowImage(_practice.screenShot);
+            }
+            else
+            {
+                PracticeTitleTb.Text = "Практическое задание не найдено.";
+                PracticeTextTb.Text = "";
+                PracticeImage.Source = null;
+            }
+        }
+
+        private string FormatStringWithNewLines(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            char[] chars = input.ToCharArray();
+            List<char> result = new List<char>();
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (chars[i] == '\\')
+                {
+                    result.Add('\n');
+                }
+                else
+                {
+                    result.Add(chars[i]);
+                }
+            }
+
+            return new string(result.ToArray());
         }
 
         private void CheckAnswer_Click(object sender, RoutedEventArgs e)
@@ -219,6 +317,7 @@ namespace CodeDevelop.View.Windows
                 if (selectedAnswer == test.rightAnswer)
                 {
                     MessageBox.Show("Правильный ответ!");
+                    _totalScore += test.mark; // Добавляем балл за правильный ответ
                 }
                 else
                 {
@@ -229,6 +328,65 @@ namespace CodeDevelop.View.Windows
                 // Перейти к следующему тесту
                 _currentTestIndex++;
                 ShowTest(_currentTestIndex);
+            }
+        }
+
+        private void ShowImage(byte[] imageData)
+        {
+            if (imageData != null && imageData.Length > 0)
+            {
+                try
+                {
+                    using (var ms = new MemoryStream(imageData))
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.StreamSource = ms;
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        PracticeImage.Source = bitmap;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при загрузке изображения: " + ex.Message);
+                }
+            }
+            else
+            {
+                PracticeImage.Source = null;
+            }
+        }
+        
+
+        private void SaveScreenshotToDatabase(int practiceId, byte[] imageData)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["CodeDevelopEntities2"].ConnectionString;
+            string query = "UPDATE [dbo].[Practice] SET [screenShot] = @screenShot WHERE [Id] = @Id";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", practiceId);
+                command.Parameters.AddWithValue("@screenShot", imageData);
+
+                try
+                {
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Скриншот успешно прикреплен.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не удалось прикрепить скриншот.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при сохранении скриншота: " + ex.Message);
+                }
             }
         }
 
@@ -250,6 +408,7 @@ namespace CodeDevelop.View.Windows
             if (selectedItem != null)
             {
                 TrainingDescriptionTb.Text = selectedItem.description;
+                _totalScore = 0;
             }
             else
             {
@@ -257,6 +416,8 @@ namespace CodeDevelop.View.Windows
             }
 
             LoadTests(selectedItem.Id);
+            LoadPractice(selectedItem.Id);
+
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -300,6 +461,28 @@ namespace CodeDevelop.View.Windows
                 default:
                     break;
             }*/
+        }
+
+        private void AttachScreenshotBt_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png|All files (*.*)|*.*",
+                Title = "Выберите скриншот"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                byte[] imageData = File.ReadAllBytes(filePath);
+
+                // Сохранение скриншота в базу данных
+                SaveScreenshotToDatabase(_practice.Id, imageData);
+
+                // Обновление текущего практического задания
+                _practice.screenShot = imageData;
+                ShowImage(_practice.screenShot);
+            }
         }
     }
 }

@@ -84,6 +84,9 @@
     <Compile Include="Model\Difficulty.cs">
       <DependentUpon>CodeDevelop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Practice.cs">
+      <DependentUpon>CodeDevelop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Role.cs">
       <DependentUpon>CodeDevelop.tt</DependentUpon>
     </Compile>

@@ -7,7 +7,7 @@
       <Diagram DiagramId="1d6552afb5034c159b53c0d684f94bf3" Name="Diagram1" ZoomLevel="109">
         <EntityTypeShape EntityType="CodeDevelopModel.Difficulty" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CodeDevelopModel.Role" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CodeDevelopModel.Status" Width="1.5" PointX="5.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CodeDevelopModel.Status" Width="1.5" PointX="5.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CodeDevelopModel.Tag" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="CodeDevelopModel.Training" Width="1.5" PointX="3.375" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="CodeDevelopModel.TrainingTest" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
@@ -18,8 +18,10 @@
         <AssociationConnector Association="CodeDevelopModel.FK_UserTraining_Training" ManuallyRouted="false" />
         <AssociationConnector Association="CodeDevelopModel.FK_UserTraining_User" ManuallyRouted="false" />
         <AssociationConnector Association="CodeDevelopModel.TrainingTag" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CodeDevelopModel.sysdiagrams" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="CodeDevelopModel.sysdiagrams" Width="1.5" PointX="10.5" PointY="4.5" />
         <AssociationConnector Association="CodeDevelopModel.FK_TrainingTest_Training" />
+        <EntityTypeShape EntityType="CodeDevelopModel.Practice" Width="1.5" PointX="5.625" PointY="10.625" />
+        <AssociationConnector Association="CodeDevelopModel.FK_Practice_Training" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

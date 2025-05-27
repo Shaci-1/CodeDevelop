@@ -20,6 +20,7 @@ namespace CodeDevelop.Model
             this.UserTraining = new HashSet<UserTraining>();
             this.Tag = new HashSet<Tag>();
             this.TrainingTest1 = new HashSet<TrainingTest>();
+            this.Practice = new HashSet<Practice>();
         }
     
         public int Id { get; set; }
@@ -37,5 +38,7 @@ namespace CodeDevelop.Model
         public virtual ICollection<Tag> Tag { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TrainingTest> TrainingTest1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Practice> Practice { get; set; }
     }
 }

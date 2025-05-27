@@ -36,6 +36,7 @@ namespace CodeDevelop.Model
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserTraining> UserTraining { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Practice> Practice { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

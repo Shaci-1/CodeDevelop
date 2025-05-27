@@ -12,6 +12,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="Practice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="text" Type="text" Nullable="false" />
+          <Property Name="trainingId" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="screenShot" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id" />
@@ -98,6 +108,18 @@
           <Property Name="CompleteCounter" Type="int" Nullable="false" />
           <Property Name="rate" Type="int" />
         </EntityType>
+        <Association Name="FK_Practice_Training">
+          <End Role="Training" Type="Self.Training" Multiplicity="1" />
+          <End Role="Practice" Type="Self.Practice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Practice">
+              <PropertyRef Name="trainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Training_Difficulty">
           <End Role="Difficulty" Type="Self.Difficulty" Multiplicity="1" />
           <End Role="Training" Type="Self.Training" Multiplicity="*" />
@@ -215,6 +237,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Хранилище CodeDevelopModelContainer">
           <EntitySet Name="Difficulty" EntityType="Self.Difficulty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Practice" EntityType="Self.Practice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -224,6 +247,10 @@
           <EntitySet Name="TrainingTest" EntityType="Self.TrainingTest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTraining" EntityType="Self.UserTraining" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Practice_Training" Association="Self.FK_Practice_Training">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="Practice" EntitySet="Practice" />
+          </AssociationSet>
           <AssociationSet Name="FK_Training_Difficulty" Association="Self.FK_Training_Difficulty">
             <End Role="Difficulty" EntitySet="Difficulty" />
             <End Role="Training" EntitySet="Training" />
@@ -303,6 +330,7 @@
           <NavigationProperty Name="UserTraining" Relationship="Self.FK_UserTraining_Training" FromRole="Training" ToRole="UserTraining" />
           <NavigationProperty Name="Tag" Relationship="Self.TrainingTag" FromRole="Training" ToRole="Tag" />
           <NavigationProperty Name="TrainingTest1" Relationship="CodeDevelopModel.FK_TrainingTest_Training" FromRole="Training" ToRole="TrainingTest" />
+          <NavigationProperty Name="Practice" Relationship="CodeDevelopModel.FK_Practice_Training" FromRole="Training" ToRole="Practice" />
         </EntityType>
         <EntityType Name="TrainingTest">
           <Key>
@@ -460,6 +488,11 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Practice" EntityType="CodeDevelopModel.Practice" />
+          <AssociationSet Name="FK_Practice_Training" Association="CodeDevelopModel.FK_Practice_Training">
+            <End Role="Training" EntitySet="Training" />
+            <End Role="Practice" EntitySet="Practice" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -494,6 +527,29 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Practice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="trainingId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Training" Relationship="CodeDevelopModel.FK_Practice_Training" FromRole="Practice" ToRole="Training" />
+          <Property Name="screenShot" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Practice_Training">
+          <End Type="CodeDevelopModel.Training" Role="Training" Multiplicity="1" />
+          <End Type="CodeDevelopModel.Practice" Role="Practice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Training">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Practice">
+              <PropertyRef Name="trainingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -625,6 +681,17 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище CodeDevelopModel.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище CodeDevelopModel.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Practice">
+            <EntityTypeMapping TypeName="CodeDevelopModel.Practice">
+              <MappingFragment StoreEntitySet="Practice">
+                <ScalarProperty Name="screenShot" ColumnName="screenShot" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="trainingId" ColumnName="trainingId" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

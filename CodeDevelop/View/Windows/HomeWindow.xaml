@@ -69,19 +69,29 @@
 
                     <TabItem Name="PracticeTaskTab">
                         <TabItem.Header>
-                            <TextBlock Text="Практическое задание"/>
+                            <TextBlock Text="Практическое задание"/>                            
                         </TabItem.Header>
                         
+                        <StackPanel>
+                            <TextBlock Name="PracticeTitleTb" TextWrapping="WrapWithOverflow" Margin="20"
+                                   FontSize="24" FontFamily="Inter" FontWeight="Bold"/>
+                            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+                                <TextBlock Name="PracticeTextTb" TextWrapping="WrapWithOverflow" Margin="20"
+                                       FontSize="20" FontFamily="Inter" Height="700" Width="1250" VerticalAlignment="Top"/>
+                            </ScrollViewer>
+                        </StackPanel>
                     </TabItem>
                 </TabControl>
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="2" Background="White">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 40 0">
-                    <Button Name="NextButton" Content="Далее" FontSize="24" Foreground="White" FontFamily="Inter"
+                <Button Name="NextButton" Content="Далее" FontSize="24" Foreground="White" FontFamily="Inter"
                         Width="200" Background="#9747FF" BorderBrush="White"
-                        Click="NextButton_Click"/>
-                </StackPanel>
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 40 0" Click="NextButton_Click"/>
+                <Button Name="AttachScreenshotBt" Content="Прикрепить скриншот" FontSize="24" Foreground="White" FontFamily="Inter"
+                                Width="300" Margin="20" Background="#9747FF" BorderBrush="White"
+                                Click="AttachScreenshotBt_Click"/>
+                <Image Name="PracticeImage" Stretch="Uniform" Margin="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" Height="50"/>
             </Grid>
             
             <Grid Grid.Row="0" Grid.ColumnSpan="2">
